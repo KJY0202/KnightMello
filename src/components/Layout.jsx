@@ -14,7 +14,7 @@ export default function Layout({ children }) {
       <header className="site-header">
         <div className="header-inner">
           <img
-            src="/images/amblum.png"
+            src={`${import.meta.env.BASE_URL}images/amblum.png`}
             alt="Knight Mello"
             className="hero-ribbon-logo"
           />

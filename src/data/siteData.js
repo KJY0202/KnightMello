@@ -55,7 +55,7 @@ export const MEMBERS = [
     color: "#c6b6f3",
     role: "MEMBER",
     bio: "紫",
-    image: "/images/emo.jpeg",
+    image: `${import.meta.env.BASE_URL}images/emo.jpeg`,
   },
   {
     id: "pareo",
@@ -64,7 +64,7 @@ export const MEMBERS = [
     color: "#f2d66d",
     role: "MEMBER",
     bio: "黄色",
-    image: "/images/pareo.jpeg",
+    image: `${import.meta.env.BASE_URL}images/pareo.jpeg`,
   },
   {
     id: "popa",
@@ -73,7 +73,7 @@ export const MEMBERS = [
     color: "#9bd9c5",
     role: "MEMBER",
     bio: "ミントグリーン",
-    image: "/images/popa.jpeg",
+    image: `${import.meta.env.BASE_URL}popa.jpeg`,
   },
   {
     id: "saetbyeol",
@@ -82,7 +82,7 @@ export const MEMBERS = [
     color: "#d8d8d4",
     role: "MEMBER",
     bio: "白",
-    image: "/images/setbyol.jpeg",
+    image: `${import.meta.env.BASE_URL}setbyol.jpeg`,
   },
 ];
 
@@ -95,7 +95,7 @@ export const VIDEOS = [
     title: "LOVE SET GO! (Official Live Video)",
     category: "LIVE",
     date: "2026.10.12",
-    thumbnail: "/images/thumb1.avif",
+    thumbnail: `${import.meta.env.BASE_URL}images/thumb1.avif`,
     url: "https://youtu.be/KmfQ8NvdG4c?si=c2yM5pUTgq1y7e63",
   },
   {

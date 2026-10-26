@@ -55,7 +55,7 @@ export default function Home() {
         </div>
 
         <img
-          src="/images/amblum.png"
+          src={`${import.meta.env.BASE_URL}images/amblum.png`}
           alt="Knight Mello"
           className="amblum-logo"
         />
