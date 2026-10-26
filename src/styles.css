@@ -63,27 +63,6 @@ a:focus-visible {
   justify-content: space-between;
   gap: 28px;
 }
-.wordmark {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  flex-shrink: 0;
-}
-.wordmark-symbol {
-  font: 800 19px/1 var(--serif);
-  letter-spacing: -2px;
-}
-.wordmark-symbol span {
-  color: #a18bd7;
-  font-size: 14px;
-  padding: 0 2px;
-  vertical-align: 3px;
-}
-.wordmark-name {
-  font: 800 11px/1 var(--serif);
-  letter-spacing: 0.11em;
-  white-space: nowrap;
-}
 .main-nav {
   display: flex;
   align-items: center;
@@ -190,7 +169,7 @@ a:focus-visible {
 .hero-placeholder-grid {
   position: absolute;
   inset: 0;
-  opacity: 0.32;
+  opacity: 0.23;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
@@ -211,6 +190,8 @@ a:focus-visible {
 .hero-star {
   font-size: 45px;
   line-height: 1;
+  color: #fff5b9;
+  text-shadow: 0 4px 30px rgba(255, 255, 255, 0.7);
 }
 .hero-placeholder-center p {
   font: 700 11px var(--serif);
@@ -240,35 +221,6 @@ a:focus-visible {
   left: 9%;
   top: 80%;
   transform: translateY(-45%);
-}
-.hero-kicker {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font: 700 9px var(--serif);
-  letter-spacing: 0.17em;
-}
-.live-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  background: var(--lime);
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(216, 240, 120, 0.2);
-}
-.hero-overlay h1 {
-  margin: 25px 0 20px;
-  font: 800 clamp(62px, 9vw, 124px)/0.84 var(--serif);
-  letter-spacing: -0.085em;
-}
-.hero-overlay h1 em {
-  font-style: normal;
-  color: var(--lime);
-}
-.hero-overlay > p {
-  font-size: 13px;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.85);
 }
 .hero-link {
   display: inline-flex;
@@ -429,18 +381,6 @@ a:focus-visible {
   outline: 1px solid #b8b4aa;
   outline-offset: 1px;
 }
-.calendar-cell i {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #a08bd5;
-  bottom: 3px;
-  left: calc(50% - 2px);
-}
-.calendar-cell.selected i {
-  background: var(--lime);
-}
 .calendar-legend {
   display: flex;
   align-items: center;
@@ -449,18 +389,12 @@ a:focus-visible {
   color: #9b94aa;
   font-size: 10px;
 }
-.legend-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #a08bd5;
-}
 .calendar-events {
   display: flex;
   flex-direction: column;
   padding: 29px 25px 23px;
   border-left: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(248, 245, 255, 0.62);
 }
 .event-panel-heading {
   padding-bottom: 20px;
@@ -699,34 +633,6 @@ a:focus-visible {
   font-size: 13px;
   font-weight: 600;
 }
-.home-end-note {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 53px 20px 63px;
-  background: #f2edff;
-  text-align: center;
-}
-.home-end-note > svg {
-  color: #8f7ac5;
-}
-.home-end-note p {
-  margin: 0;
-  color: #747168;
-  font-size: 12px;
-  line-height: 1.9;
-}
-.home-end-note p strong {
-  color: var(--ink);
-  font: 700 14px var(--serif);
-}
-.home-end-note > span {
-  color: #9b978d;
-  font: 700 8px var(--serif);
-  letter-spacing: 0.16em;
-}
 .site-footer {
   max-width: 1440px;
   margin: 0 auto;
@@ -935,6 +841,11 @@ a:focus-visible {
   flex-direction: column;
   gap: 12px;
   color: rgba(34, 34, 31, 0.55);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--member-color) 85%, white),
+    white
+  );
 }
 .profile-photo-empty > span {
   font: 800 clamp(80px, 15vw, 180px)/0.9 var(--serif);
@@ -1139,13 +1050,7 @@ a:focus-visible {
     gap: 17px;
     padding: 0 3.5%;
   }
-  .wordmark {
-    gap: 7px;
-  }
-  .wordmark-name {
-    font-size: 9px;
-  }
-  .main-nav {
+      .main-nav {
     gap: 17px;
   }
   .nav-link {
@@ -1183,13 +1088,7 @@ a:focus-visible {
   .header-inner {
     padding: 0 5%;
   }
-  .wordmark-symbol {
-    font-size: 18px;
-  }
-  .wordmark-name {
-    font-size: 10px;
-  }
-  .mobile-menu-button {
+      .mobile-menu-button {
     display: grid;
     place-items: center;
     margin-left: auto;
@@ -1229,10 +1128,7 @@ a:focus-visible {
     left: 7%;
     top: 48%;
   }
-  .hero-overlay h1 {
-    font-size: clamp(67px, 15vw, 108px);
-  }
-  .hero-corner-tl {
+    .hero-corner-tl {
     left: 6%;
     top: 20px;
     font-size: 7px;
@@ -1364,13 +1260,7 @@ a:focus-visible {
   .hero-visual {
     min-height: 570px;
   }
-  .hero-overlay h1 {
-    font-size: 68px;
-  }
-  .hero-overlay > p {
-    font-size: 12px;
-  }
-  .section-heading {
+      .section-heading {
     flex-direction: column;
     gap: 4px;
   }
@@ -1424,10 +1314,7 @@ a:focus-visible {
   .media-meta {
     flex-direction: row;
   }
-  .home-end-note {
-    padding: 42px 20px 49px;
-  }
-  .footer-top {
+    .footer-top {
     align-items: flex-start;
     gap: 18px;
     flex-direction: column;
@@ -1522,10 +1409,6 @@ a:focus-visible {
   margin: 5px 0 0;
   color: #8e879f;
 }
-.event-description {
-  white-space: pre-line;
-  line-height: 1.7;
-}
 .event-google-link {
   display: inline-block;
   margin-top: 10px;
@@ -1541,32 +1424,6 @@ a:focus-visible {
   to {
     transform: rotate(360deg);
   }
-}
-.hero-image-placeholder {
-  background: linear-gradient(125deg, #c9b9f1 0%, #f6cfe0 48%, #c5f0df 100%);
-}
-.hero-placeholder-grid {
-  opacity: 0.23;
-}
-.hero-star {
-  color: #fff5b9;
-  text-shadow: 0 4px 30px rgba(255, 255, 255, 0.7);
-}
-.notice-section {
-  background: #f2edff;
-}
-.home-end-note {
-  background: #effaf4;
-}
-.profile-photo-empty {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--member-color) 85%, white),
-    white
-  );
-}
-.calendar-events {
-  background: rgba(248, 245, 255, 0.62);
 }
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -1666,13 +1523,6 @@ a:focus-visible {
   color: #8b65d6;
 }
 
-/* 안내 문구 */
-.calendar-legend {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .legend-event-label {
   padding: 3px 7px;
   border-radius: 5px;
@@ -1702,17 +1552,10 @@ a:focus-visible {
 .event-description {
   min-width: 0;
   max-width: 100%;
+  line-height: 1.7;
   overflow-wrap: anywhere;
   word-break: break-word;
-  white-space: normal;
-}
-
-.event-description a {
-  display: inline;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-  word-break: break-all;
-  white-space: normal;
+  white-space: pre-wrap;
 }
 
 .calendar-events,
@@ -1744,4 +1587,86 @@ a:focus-visible {
   object-fit: contain;
   z-index: 2;
   pointer-events: none;
+}
+
+/* =========================================
+   Calendar event detail — consistent spacing
+   ========================================= */
+
+.event-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+}
+
+.event-item > .event-tag {
+  align-self: flex-start;
+  margin-bottom: 12px;
+}
+
+.event-item > h4 {
+  margin: 0 0 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.event-item > p {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 9px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.event-item > p svg {
+  flex: 0 0 14px;
+  margin-top: 2px;
+}
+
+.event-item > .event-description {
+  margin-top: 10px;
+  padding-top: 13px;
+  border-top: 1px solid #e8e2ef;
+  color: #625b70;
+  font-size: 11px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* 설명의 문단 간격 통일 */
+.event-description p {
+  display: block;
+  margin: 0 0 10px;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  overflow-wrap: anywhere;
+}
+
+.event-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* 예약 링크 강조 */
+.event-description a {
+  display: inline;
+  max-width: 100%;
+  white-space: normal;
+  color: #7655ad;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  transition: color 0.2s ease;
+}
+
+.event-description a:hover {
+  color: #4f347f;
+  text-decoration-thickness: 2px;
 }
