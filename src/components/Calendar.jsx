@@ -22,7 +22,7 @@ const GOOGLE_CALENDAR_READY = Boolean(CALENDAR_ID && API_KEY);
 
 const KNIGHT_MELLO_KEYWORDS = ["knight mello", "knightmello", "나이트멜로"];
 
-function isKnightMelloEvent(event) {
+export function isKnightMelloEvent(event) {
   const title = String(event.title || event.summary || "").trim();
 
   return /^\[\s*knight\s+mello\s*\]/i.test(title);
@@ -192,7 +192,7 @@ export default function Calendar({ compact = false, onEventsChange }) {
 
     const timeMin = new Date(view.year, view.month, 1).toISOString();
 
-    const timeMax = new Date(view.year, view.month + 6, 1).toISOString();
+    const timeMax = new Date(view.year, view.month + 12, 1).toISOString();
 
     const params = new URLSearchParams({
       key: API_KEY,
@@ -232,9 +232,9 @@ export default function Calendar({ compact = false, onEventsChange }) {
   // Knight Mello 관련 일정만 사용
   const events = useMemo(
     () =>
-      GOOGLE_CALENDAR_READY
-        ? googleEvents
-        : SCHEDULES.filter(isKnightMelloEvent),
+      (GOOGLE_CALENDAR_READY ? googleEvents : SCHEDULES).filter(
+        isKnightMelloEvent,
+      ),
     [googleEvents],
   );
 

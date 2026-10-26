@@ -16,7 +16,7 @@ import {
   VIDEOS,
 } from "../data/siteData.js";
 import SectionHeading from "../components/SectionHeading.jsx";
-import Calendar from "../components/Calendar.jsx";
+import Calendar, { isKnightMelloEvent } from "../components/Calendar.jsx";
 import MediaCard from "../components/MediaCard.jsx";
 
 const today = new Date();
@@ -143,16 +143,13 @@ export default function Home() {
   const upcomingSchedules = useMemo(
     () =>
       calendarSchedules
-        .filter((schedule) => {
-          const title = String(schedule.title || schedule.detail || "").trim();
-
-          return (
-            /^\[\s*knight\s+mello\s*\]/i.test(title) &&
+        .filter(
+          (schedule) =>
+            isKnightMelloEvent(schedule) &&
             schedule.date &&
             schedule.date >= todayKey &&
-            !isPlaceholderSchedule(schedule)
-          );
-        })
+            !isPlaceholderSchedule(schedule),
+        )
         .sort((a, b) =>
           `${a.date} ${a.time || "23:59"}`.localeCompare(
             `${b.date} ${b.time || "23:59"}`,
