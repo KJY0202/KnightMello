@@ -143,12 +143,16 @@ export default function Home() {
   const upcomingSchedules = useMemo(
     () =>
       calendarSchedules
-        .filter(
-          (schedule) =>
+        .filter((schedule) => {
+          const title = String(schedule.title || schedule.detail || "").trim();
+
+          return (
+            /^\[\s*knight\s+mello\s*\]/i.test(title) &&
             schedule.date &&
             schedule.date >= todayKey &&
-            !isPlaceholderSchedule(schedule),
-        )
+            !isPlaceholderSchedule(schedule)
+          );
+        })
         .sort((a, b) =>
           `${a.date} ${a.time || "23:59"}`.localeCompare(
             `${b.date} ${b.time || "23:59"}`,

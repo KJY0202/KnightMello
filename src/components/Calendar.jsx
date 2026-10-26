@@ -23,18 +23,9 @@ const GOOGLE_CALENDAR_READY = Boolean(CALENDAR_ID && API_KEY);
 const KNIGHT_MELLO_KEYWORDS = ["knight mello", "knightmello", "나이트멜로"];
 
 function isKnightMelloEvent(event) {
-  const text = [
-    event.title,
-    event.detail,
-    event.place,
-    event.description,
-    event.location,
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
+  const title = String(event.title || event.summary || "").trim();
 
-  return /knight\s*mello|knightmello|나이트\s*멜로|나멜/.test(text);
+  return /^\[\s*knight\s+mello\s*\]/i.test(title);
 }
 
 function formatEventDate(event) {
