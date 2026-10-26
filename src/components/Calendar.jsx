@@ -164,7 +164,7 @@ async function fetchGoogleEvents(params, signal) {
   return events;
 }
 
-export default function Calendar({ compact = false }) {
+export default function Calendar({ compact = false, onEventsChange }) {
   const today = new Date();
 
   const [view, setView] = useState(() => ({
@@ -194,7 +194,7 @@ export default function Calendar({ compact = false }) {
 
     const timeMin = new Date(view.year, view.month, 1).toISOString();
 
-    const timeMax = new Date(view.year, view.month + 1, 1).toISOString();
+    const timeMax = new Date(view.year, view.month + 6, 1).toISOString();
 
     const params = new URLSearchParams({
       key: API_KEY,
@@ -232,14 +232,25 @@ export default function Calendar({ compact = false }) {
   }, [view.year, view.month]);
 
   // Knight Mello 관련 일정만 사용
+  // Knight Mello 관련 일정만 사용
   const events = useMemo(
     () =>
-      (GOOGLE_CALENDAR_READY ? googleEvents : SCHEDULES).filter(
-        isKnightMelloEvent,
-      ),
+      GOOGLE_CALENDAR_READY
+        ? googleEvents
+        : SCHEDULES.filter(
+            (event) =>
+              !/sample event|google calendar 연결 전|siteData\.js에서 수정/i.test(
+                [event.title, event.detail, event.place]
+                  .filter(Boolean)
+                  .join(" "),
+              ),
+          ),
     [googleEvents],
   );
 
+  useEffect(() => {
+    onEventsChange?.(events);
+  }, [events, onEventsChange]);
   const todayKey = keyFor(
     today.getFullYear(),
     today.getMonth(),

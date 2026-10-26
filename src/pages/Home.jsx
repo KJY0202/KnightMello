@@ -1,3 +1,4 @@
+import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowDownRight,
@@ -12,7 +13,6 @@ import {
   HOME_GROUP_IMAGE,
   NOTICES,
   OFFICIAL_X_URL,
-  SCHEDULES,
   VIDEOS,
 } from "../data/siteData.js";
 import SectionHeading from "../components/SectionHeading.jsx";
@@ -27,16 +27,6 @@ const isPlaceholderSchedule = (schedule) =>
     [schedule.title, schedule.detail, schedule.place].filter(Boolean).join(" "),
   );
 
-const UPCOMING_SCHEDULES = [...SCHEDULES]
-  .filter(
-    (schedule) =>
-      schedule.date &&
-      schedule.date >= todayKey &&
-      !isPlaceholderSchedule(schedule),
-  )
-  .sort((a, b) => `${a.date} ${a.time || "23:59"}`.localeCompare(`${b.date} ${b.time || "23:59"}`))
-  .slice(0, 3);
-
 function formatScheduleDate(dateString) {
   const date = new Date(`${dateString}T12:00:00`);
   return {
@@ -46,7 +36,7 @@ function formatScheduleDate(dateString) {
   };
 }
 
-function UpcomingSchedule() {
+function UpcomingSchedule({ schedules }) {
   return (
     <div className="upcoming-block">
       <div className="upcoming-block-label">
@@ -54,7 +44,7 @@ function UpcomingSchedule() {
         <span>UPCOMING EVENTS</span>
       </div>
 
-      {UPCOMING_SCHEDULES.length > 0 ? (
+      {schedules.length > 0 ? (
         <motion.div
           className="upcoming-schedule-list"
           initial="hidden"
@@ -62,7 +52,7 @@ function UpcomingSchedule() {
           viewport={{ once: true, amount: 0.18 }}
           variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
         >
-          {UPCOMING_SCHEDULES.map((schedule, index) => {
+          {schedules.map((schedule, index) => {
             const date = formatScheduleDate(schedule.date);
             return (
               <motion.article
@@ -123,6 +113,28 @@ function UpcomingSchedule() {
 }
 
 export default function Home() {
+  const [calendarSchedules, setCalendarSchedules] = useState([]);
+  const handleCalendarEvents = useCallback((events) => {
+    setCalendarSchedules(events);
+  }, []);
+  const upcomingSchedules = useMemo(
+    () =>
+      calendarSchedules
+        .filter(
+          (schedule) =>
+            schedule.date &&
+            schedule.date >= todayKey &&
+            !isPlaceholderSchedule(schedule),
+        )
+        .sort((a, b) =>
+          `${a.date} ${a.time || "23:59"}`.localeCompare(
+            `${b.date} ${b.time || "23:59"}`,
+          ),
+        )
+        .slice(0, 3),
+    [calendarSchedules],
+  );
+
   return (
     <motion.div
       className="page home-page"
@@ -176,12 +188,12 @@ export default function Home() {
             </Link>
           }
         />
-        <UpcomingSchedule />
+        <UpcomingSchedule schedules={upcomingSchedules} />
         <div className="home-calendar-heading">
           <span>MONTHLY CALENDAR</span>
           <span>일정을 눌러 상세 내용을 확인하세요</span>
         </div>
-        <Calendar compact />
+        <Calendar compact onEventsChange={handleCalendarEvents} />
       </section>
 
       <section className="content-section notice-section">
