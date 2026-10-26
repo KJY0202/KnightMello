@@ -73,7 +73,7 @@ export const MEMBERS = [
     color: "#9bd9c5",
     role: "MEMBER",
     bio: "ミントグリーン",
-    image: `${import.meta.env.BASE_URL}popa.jpeg`,
+    image: `${import.meta.env.BASE_URL}images/popa.jpeg`,
   },
   {
     id: "saetbyeol",
@@ -82,7 +82,7 @@ export const MEMBERS = [
     color: "#d8d8d4",
     role: "MEMBER",
     bio: "白",
-    image: `${import.meta.env.BASE_URL}setbyol.jpeg`,
+    image: `${import.meta.env.BASE_URL}images/setbyol.jpeg`,
   },
 ];
 
