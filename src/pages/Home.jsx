@@ -40,7 +40,9 @@ function UpcomingSchedule({ schedules }) {
   return (
     <div className="upcoming-block">
       <div className="upcoming-block-label">
-        <span><Sparkles size={14} /> NEXT LIVE</span>
+        <span>
+          <Sparkles size={14} /> NEXT LIVE
+        </span>
         <span>UPCOMING EVENTS</span>
       </div>
 
@@ -48,7 +50,7 @@ function UpcomingSchedule({ schedules }) {
         <motion.div
           className="upcoming-schedule-list"
           initial="hidden"
-          whileInView="visible"
+          animate="visible"
           viewport={{ once: true, amount: 0.18 }}
           variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
         >
@@ -65,27 +67,38 @@ function UpcomingSchedule({ schedules }) {
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -4 }}
               >
-                <div className="upcoming-date-block" aria-label={`${schedule.date} ${date.weekday}`}>
+                <div
+                  className="upcoming-date-block"
+                  aria-label={`${schedule.date} ${date.weekday}`}
+                >
                   <span>{date.month}</span>
                   <strong>{date.day}</strong>
                   <small>{date.weekday}</small>
                 </div>
                 <div className="upcoming-event-copy">
-                  <span className="upcoming-event-index">LIVE / 0{index + 1}</span>
+                  <span className="upcoming-event-index">
+                    LIVE / 0{index + 1}
+                  </span>
                   <h3>{schedule.title}</h3>
                   {schedule.detail && schedule.detail !== schedule.title && (
                     <p className="upcoming-event-detail">{schedule.detail}</p>
                   )}
                   <div className="upcoming-event-meta">
                     {schedule.time && (
-                      <span><Clock3 size={13} /> {schedule.time}</span>
+                      <span>
+                        <Clock3 size={13} /> {schedule.time}
+                      </span>
                     )}
                     {schedule.place && (
-                      <span><MapPin size={13} /> {schedule.place}</span>
+                      <span>
+                        <MapPin size={13} /> {schedule.place}
+                      </span>
                     )}
                   </div>
                 </div>
-                <span className="upcoming-event-sparkle" aria-hidden="true">✳</span>
+                <span className="upcoming-event-sparkle" aria-hidden="true">
+                  ✳
+                </span>
               </motion.article>
             );
           })}
@@ -94,16 +107,26 @@ function UpcomingSchedule({ schedules }) {
         <motion.div
           className="upcoming-empty"
           initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45 }}
         >
-          <span className="upcoming-empty-icon"><CalendarDays size={21} /></span>
+          <span className="upcoming-empty-icon">
+            <CalendarDays size={21} />
+          </span>
           <div className="upcoming-empty-copy">
             <strong>새로운 일정을 기다리고 있어요.</strong>
-            <p>등록된 예정 일정이 없습니다. 최신 공연 소식은 공식 SNS에서 확인해 주세요.</p>
+            <p>
+              등록된 예정 일정이 없습니다. 최신 공연 소식은 공식 SNS에서 확인해
+              주세요.
+            </p>
           </div>
-          <a className="upcoming-official-link" href={OFFICIAL_X_URL} target="_blank" rel="noreferrer">
+          <a
+            className="upcoming-official-link"
+            href={OFFICIAL_X_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
             OFFICIAL X <ArrowUpRight size={15} />
           </a>
         </motion.div>
@@ -153,13 +176,17 @@ export default function Home() {
         ) : (
           <div className="hero-image-placeholder">
             <div className="hero-placeholder-grid" />
-            <span className="hero-corner hero-corner-tl">KNIGHT MELLO / UNOFFICIAL ARCHIVE</span>
+            <span className="hero-corner hero-corner-tl">
+              KNIGHT MELLO / UNOFFICIAL ARCHIVE
+            </span>
             <div className="hero-placeholder-center">
               <span className="hero-star">✳</span>
               <p>YOUR GROUP PHOTO GOES HERE</p>
               <span>src/data/siteData.js → HOME_GROUP_IMAGE</span>
             </div>
-            <span className="hero-corner hero-corner-br">UNOFFICIAL FAN SITE · EST. 2026</span>
+            <span className="hero-corner hero-corner-br">
+              UNOFFICIAL FAN SITE · EST. 2026
+            </span>
           </div>
         )}
         <div className="hero-overlay">
@@ -174,7 +201,9 @@ export default function Home() {
         />
         <div className="hero-bottom-label">
           <span>01 — THE GROUP</span>
-          <span>SCROLL TO DISCOVER <ArrowDownRight size={14} /></span>
+          <span>
+            SCROLL TO DISCOVER <ArrowDownRight size={14} />
+          </span>
         </div>
       </section>
 
@@ -216,7 +245,10 @@ export default function Home() {
           {NOTICES.slice(0, 3).map((notice, index) => (
             <motion.div
               key={notice.id}
-              variants={{ hidden: { opacity: 0, x: -12 }, visible: { opacity: 1, x: 0 } }}
+              variants={{
+                hidden: { opacity: 0, x: -12 },
+                visible: { opacity: 1, x: 0 },
+              }}
               transition={{ duration: 0.35 }}
             >
               <Link to="/notice" className="notice-row">
@@ -251,7 +283,10 @@ export default function Home() {
           {VIDEOS.slice(0, 3).map((item, index) => (
             <motion.div
               key={item.id}
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
               <MediaCard item={item} index={index} />
