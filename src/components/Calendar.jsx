@@ -23,11 +23,18 @@ const GOOGLE_CALENDAR_READY = Boolean(CALENDAR_ID && API_KEY);
 const KNIGHT_MELLO_KEYWORDS = ["knight mello", "knightmello", "나이트멜로"];
 
 function isKnightMelloEvent(event) {
-  const text = [event.title, event.detail, event.description]
+  const text = [
+    event.title,
+    event.detail,
+    event.place,
+    event.description,
+    event.location,
+  ]
+    .filter(Boolean)
     .join(" ")
     .toLowerCase();
 
-  return KNIGHT_MELLO_KEYWORDS.some((keyword) => text.includes(keyword));
+  return /knight\s*mello|knightmello|나이트\s*멜로|나멜/.test(text);
 }
 
 function formatEventDate(event) {
@@ -213,7 +220,9 @@ export default function Calendar({ compact = false, onEventsChange }) {
     fetchGoogleEvents(params, controller.signal)
       .then((items) => {
         setGoogleEvents(
-          items.map(normalizeGoogleEvent).filter((event) => event.date),
+          items
+            .map(normalizeGoogleEvent)
+            .filter((event) => event.date && isKnightMelloEvent(event)),
         );
       })
       .catch((error) => {
@@ -232,19 +241,11 @@ export default function Calendar({ compact = false, onEventsChange }) {
   }, [view.year, view.month]);
 
   // Knight Mello 관련 일정만 사용
-  // Knight Mello 관련 일정만 사용
   const events = useMemo(
     () =>
-      GOOGLE_CALENDAR_READY
-        ? googleEvents
-        : SCHEDULES.filter(
-            (event) =>
-              !/sample event|google calendar 연결 전|siteData\.js에서 수정/i.test(
-                [event.title, event.detail, event.place]
-                  .filter(Boolean)
-                  .join(" "),
-              ),
-          ),
+      (GOOGLE_CALENDAR_READY ? googleEvents : SCHEDULES).filter(
+        isKnightMelloEvent,
+      ),
     [googleEvents],
   );
 
