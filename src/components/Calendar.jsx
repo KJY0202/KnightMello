@@ -220,9 +220,7 @@ export default function Calendar({ compact = false, onEventsChange }) {
     fetchGoogleEvents(params, controller.signal)
       .then((items) => {
         setGoogleEvents(
-          items
-            .map(normalizeGoogleEvent)
-            .filter((event) => event.date && isKnightMelloEvent(event)),
+          items.map(normalizeGoogleEvent).filter((event) => event.date),
         );
       })
       .catch((error) => {
@@ -243,9 +241,9 @@ export default function Calendar({ compact = false, onEventsChange }) {
   // Knight Mello 관련 일정만 사용
   const events = useMemo(
     () =>
-      (GOOGLE_CALENDAR_READY ? googleEvents : SCHEDULES).filter(
-        isKnightMelloEvent,
-      ),
+      GOOGLE_CALENDAR_READY
+        ? googleEvents
+        : SCHEDULES.filter(isKnightMelloEvent),
     [googleEvents],
   );
 
