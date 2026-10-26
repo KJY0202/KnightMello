@@ -88,7 +88,7 @@ export const MEMBERS = [
 
 // 이미지 파일을 public/images 폴더에 넣고 경로를 입력하세요.
 // 예: image: "/images/group-main.jpg"
-export const HOME_GROUP_IMAGE = "/images/group.jpeg";
+export const HOME_GROUP_IMAGE = `${import.meta.env.BASE_URL}images/group.jpeg`;
 export const VIDEOS = [
   {
     id: "v1",
