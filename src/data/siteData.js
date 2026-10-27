@@ -59,6 +59,7 @@ export const MEMBERS = [
     role: "MEMBER",
     bio: "紫",
     image: imagePath("emo.jpeg"),
+    xUrl: "", // 에모의 개인 X 주소
   },
   {
     id: "pareo",
@@ -68,6 +69,7 @@ export const MEMBERS = [
     role: "MEMBER",
     bio: "黄色",
     image: imagePath("pareo.jpeg"),
+    xUrl: "", // 파레오의 개인 X 주소
   },
   {
     id: "popa",
@@ -77,6 +79,7 @@ export const MEMBERS = [
     role: "MEMBER",
     bio: "ミントグリーン",
     image: imagePath("popa.jpeg"),
+    xUrl: "", // 포파의 개인 X 주소
   },
   {
     id: "saetbyeol",
@@ -86,6 +89,7 @@ export const MEMBERS = [
     role: "MEMBER",
     bio: "白",
     image: imagePath("setbyol.jpeg"),
+    xUrl: "", // 샛별의 개인 X 주소
   },
 ];
 

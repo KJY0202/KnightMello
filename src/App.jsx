@@ -9,6 +9,7 @@ import Admin from "./pages/Admin.jsx";
 const Notice = lazy(() => import("./pages/Notice.jsx"));
 const Schedule = lazy(() => import("./pages/Schedule.jsx"));
 const Profile = lazy(() => import("./pages/Profile.jsx"));
+const ProfileDetail = lazy(() => import("./pages/ProfileDetail.jsx"));
 const Video = lazy(() => import("./pages/Video.jsx"));
 const Photo = lazy(() => import("./pages/Photo.jsx"));
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/notice" element={lazyPage(Notice)} />
         <Route path="/schedule" element={lazyPage(Schedule)} />
         <Route path="/profile" element={lazyPage(Profile)} />
+        <Route path="/profile/:memberId" element={lazyPage(ProfileDetail)} />
         <Route path="/video" element={lazyPage(Video)} />
         <Route path="/photo" element={lazyPage(Photo)} />
         <Route path="*" element={lazyPage(NotFound)} />
