@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -20,34 +20,39 @@ const tileVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
+// PHOTOS는 바뀌지 않는 데이터라서 컴포넌트 밖에서 한 번만 계산해요.
+const AVAILABLE_PHOTOS = PHOTOS.filter((photo) => Boolean(photo.image));
+const AVAILABLE_INDEX_BY_ID = new Map(
+  AVAILABLE_PHOTOS.map((photo, index) => [photo.id, index]),
+);
+const PHOTO_COUNT = AVAILABLE_PHOTOS.length;
+
 export default function Photo() {
   const [activeIndex, setActiveIndex] = useState(-1);
-  const availablePhotos = useMemo(() => PHOTOS.filter((photo) => Boolean(photo.image)), []);
-  const activePhoto = activeIndex >= 0 ? availablePhotos[activeIndex] : null;
-  const closeLightbox = () => setActiveIndex(-1);
+  const isOpen = activeIndex >= 0;
+  const activePhoto = isOpen ? AVAILABLE_PHOTOS[activeIndex] : null;
 
-  const showPrevious = () => {
-    setActiveIndex((current) =>
-      current <= 0 ? availablePhotos.length - 1 : current - 1,
-    );
-  };
+  const closeLightbox = useCallback(() => setActiveIndex(-1), []);
 
-  const showNext = () => {
-    setActiveIndex((current) =>
-      current >= availablePhotos.length - 1 ? 0 : current + 1,
-    );
-  };
+  const showPrevious = useCallback(() => {
+    setActiveIndex((current) => (current <= 0 ? PHOTO_COUNT - 1 : current - 1));
+  }, []);
 
+  const showNext = useCallback(() => {
+    setActiveIndex((current) => (current >= PHOTO_COUNT - 1 ? 0 : current + 1));
+  }, []);
+
+  // 라이트박스가 열려 있는 동안만 키보드 이벤트와 스크롤 잠금을 사용해요.
   useEffect(() => {
-    if (activeIndex < 0 || availablePhotos.length === 0) return undefined;
+    if (!isOpen) return undefined;
 
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") closeLightbox();
-      if (event.key === "ArrowLeft" && availablePhotos.length > 1) showPrevious();
-      if (event.key === "ArrowRight" && availablePhotos.length > 1) showNext();
+      if (event.key === "ArrowLeft" && PHOTO_COUNT > 1) showPrevious();
+      if (event.key === "ArrowRight" && PHOTO_COUNT > 1) showNext();
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -55,9 +60,7 @@ export default function Photo() {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalOverflow;
     };
-    // The lightbox stays open while activeIndex changes; keep one keyboard listener alive.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex >= 0, availablePhotos.length]);
+  }, [isOpen, closeLightbox, showPrevious, showNext]);
 
   return (
     <motion.div
@@ -77,7 +80,7 @@ export default function Photo() {
         <div className="photo-archive-toolbar">
           <div className="list-topline">
             <span>PHOTO ARCHIVE</span>
-            <span>{String(availablePhotos.length).padStart(2, "0")} PHOTOS</span>
+            <span>{String(PHOTO_COUNT).padStart(2, "0")} PHOTOS</span>
           </div>
           <p>사진을 누르면 크게 볼 수 있어요.</p>
         </div>
@@ -89,7 +92,7 @@ export default function Photo() {
           animate="visible"
         >
           {PHOTOS.map((photo, index) => {
-            const availableIndex = availablePhotos.findIndex((item) => item.id === photo.id);
+            const availableIndex = AVAILABLE_INDEX_BY_ID.get(photo.id);
             const hasImage = Boolean(photo.image);
 
             return (
@@ -103,22 +106,37 @@ export default function Photo() {
                 whileHover={hasImage ? { y: -5 } : undefined}
                 whileTap={hasImage ? { scale: 0.985 } : undefined}
                 transition={{ duration: 0.28, ease: "easeOut" }}
-                aria-label={hasImage ? `${photo.title} 크게 보기` : `${photo.title}, 사진 준비 중`}
+                aria-label={
+                  hasImage
+                    ? `${photo.title} 크게 보기`
+                    : `${photo.title}, 사진 준비 중`
+                }
               >
                 <div className="photo-tile-image photo-tile-image-upgraded">
                   {hasImage ? (
-                    <img src={photo.image} alt={photo.title} loading="lazy" />
+                    <img
+                      src={photo.image}
+                      alt={photo.title}
+                      loading="lazy"
+                      decoding="async"
+                    />
                   ) : (
                     <div className="photo-empty photo-empty-upgraded">
-                      <span><ImageIcon size={25} strokeWidth={1.4} /></span>
+                      <span>
+                        <ImageIcon size={25} strokeWidth={1.4} />
+                      </span>
                       <small>PHOTO {String(index + 1).padStart(2, "0")}</small>
                       <em>COMING SOON</em>
                     </div>
                   )}
                   {hasImage && (
-                    <span className="photo-tile-open"><ArrowUpRight size={16} /></span>
+                    <span className="photo-tile-open">
+                      <ArrowUpRight size={16} />
+                    </span>
                   )}
-                  <span className="photo-tile-number">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="photo-tile-number">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                 </div>
                 <div className="photo-tile-meta photo-tile-meta-upgraded">
                   <span>{photo.title}</span>
@@ -129,7 +147,7 @@ export default function Photo() {
           })}
         </motion.div>
 
-        {availablePhotos.length === 0 ? (
+        {PHOTO_COUNT === 0 ? (
           <motion.div
             className="photo-empty-note"
             initial={{ opacity: 0, y: 10 }}
@@ -138,10 +156,12 @@ export default function Photo() {
           >
             <span>✳</span>
             <p>아직 등록된 사진이 없어요.</p>
-            <small>사진 파일을 <code>public/images</code>에 넣고 <code>src/data/siteData.js</code>의 PHOTOS에 경로를 추가하면 여기에 표시됩니다.</small>
           </motion.div>
         ) : (
-          <p className="disclaimer-note">사진을 좌우 화살표 또는 키보드 ← → 로 넘길 수 있어요. ESC를 누르면 닫힙니다.</p>
+          <p className="disclaimer-note">
+            사진을 좌우 화살표 또는 키보드 ← → 로 넘길 수 있어요. ESC를 누르면
+            닫힙니다.
+          </p>
         )}
       </section>
 
@@ -161,18 +181,24 @@ export default function Photo() {
             <button
               className="lightbox-close"
               type="button"
-              onClick={(event) => { event.stopPropagation(); closeLightbox(); }}
+              onClick={(event) => {
+                event.stopPropagation();
+                closeLightbox();
+              }}
               aria-label="사진 닫기"
             >
               <X size={22} />
             </button>
 
-            {availablePhotos.length > 1 && (
+            {PHOTO_COUNT > 1 && (
               <>
                 <button
                   className="lightbox-nav lightbox-prev"
                   type="button"
-                  onClick={(event) => { event.stopPropagation(); showPrevious(); }}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    showPrevious();
+                  }}
                   aria-label="이전 사진"
                 >
                   <ArrowLeft size={23} />
@@ -180,7 +206,10 @@ export default function Photo() {
                 <button
                   className="lightbox-nav lightbox-next"
                   type="button"
-                  onClick={(event) => { event.stopPropagation(); showNext(); }}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    showNext();
+                  }}
                   aria-label="다음 사진"
                 >
                   <ArrowRight size={23} />
@@ -198,7 +227,11 @@ export default function Photo() {
                 transition={{ duration: 0.22 }}
                 onClick={(event) => event.stopPropagation()}
               >
-                <img src={activePhoto.image} alt={activePhoto.title} />
+                <img
+                  src={activePhoto.image}
+                  alt={activePhoto.title}
+                  decoding="async"
+                />
                 <div className="lightbox-caption">
                   <div>
                     <span>KNIGHT MELLO / PHOTO ARCHIVE</span>
@@ -206,7 +239,10 @@ export default function Photo() {
                   </div>
                   <div className="lightbox-caption-meta">
                     <span>{activePhoto.date}</span>
-                    <span>{String(activeIndex + 1).padStart(2, "0")} / {String(availablePhotos.length).padStart(2, "0")}</span>
+                    <span>
+                      {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                      {String(PHOTO_COUNT).padStart(2, "0")}
+                    </span>
                   </div>
                 </div>
               </motion.div>

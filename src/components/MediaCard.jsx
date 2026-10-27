@@ -5,10 +5,10 @@ export default function MediaCard({ item, type = "video", index = 0 }) {
   const content = (
     <>
       <div className={`media-image ${image ? "has-image" : ""}`}>
-        {image ? <img src={image} alt={item.title} /> : <div className={`media-placeholder ${isVideo ? "video-placeholder" : "photo-placeholder"}`}>
+        {image ? <img src={image} alt={item.title} loading="lazy" decoding="async" /> : <div className={`media-placeholder ${isVideo ? "video-placeholder" : "photo-placeholder"}`}>
           <span className="placeholder-mark">{isVideo ? "▶" : "✳"}</span><span>{isVideo ? "VIDEO ARCHIVE" : "PHOTO ARCHIVE"}</span>
         </div>}
-        <span className="media-index">0{index + 1}</span>
+        <span className="media-index">{String(index + 1).padStart(2, "0")}</span>
         <span className="media-action">{isVideo ? <Play size={16} fill="currentColor" /> : <ArrowUpRight size={17} />}</span>
       </div>
       <div className="media-meta"><span>{item.category || (isVideo ? "PHOTO LOG" : "ARCHIVE")}</span><span>{item.date}</span></div>

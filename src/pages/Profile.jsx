@@ -31,14 +31,19 @@ export default function Profile() {
                 style={{ "--member-color": member.color }}
               >
                 {member.image ? (
-                  <img src={member.image} alt={member.nameKo} />
+                  <img
+                    src={member.image}
+                    alt={member.nameKo}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
                 ) : (
                   <div className="profile-photo-empty">
                     <span>{member.name.slice(0, 1)}</span>
                     <small>PHOTO TO BE ADDED</small>
                   </div>
                 )}
-                <span className="profile-count">0{index + 1}</span>
+                <span className="profile-count">{String(index + 1).padStart(2, "0")}</span>
                 <span className="profile-color-dot" />
               </div>
               <div className="profile-card-bottom">

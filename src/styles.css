@@ -1050,7 +1050,7 @@ a:focus-visible {
     gap: 17px;
     padding: 0 3.5%;
   }
-      .main-nav {
+  .main-nav {
     gap: 17px;
   }
   .nav-link {
@@ -1088,7 +1088,7 @@ a:focus-visible {
   .header-inner {
     padding: 0 5%;
   }
-      .mobile-menu-button {
+  .mobile-menu-button {
     display: grid;
     place-items: center;
     margin-left: auto;
@@ -1128,7 +1128,7 @@ a:focus-visible {
     left: 7%;
     top: 48%;
   }
-    .hero-corner-tl {
+  .hero-corner-tl {
     left: 6%;
     top: 20px;
     font-size: 7px;
@@ -1260,7 +1260,7 @@ a:focus-visible {
   .hero-visual {
     min-height: 570px;
   }
-      .section-heading {
+  .section-heading {
     flex-direction: column;
     gap: 4px;
   }
@@ -1314,7 +1314,7 @@ a:focus-visible {
   .media-meta {
     flex-direction: row;
   }
-    .footer-top {
+  .footer-top {
     align-items: flex-start;
     gap: 18px;
     flex-direction: column;
@@ -1669,4 +1669,181 @@ a:focus-visible {
 .event-description a:hover {
   color: #4f347f;
   text-decoration-thickness: 2px;
+}
+
+.admin-login-page {
+  min-height: 75vh;
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+  background: #fffaff;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 36px;
+  border: 1px solid #eee2f7;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 12px 40px rgba(120, 85, 150, 0.08);
+}
+
+.admin-login-card h1 {
+  margin: 10px 0;
+  color: #59446e;
+}
+
+.admin-login-card form {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.admin-login-card input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e4d9ed;
+  border-radius: 10px;
+  font: inherit;
+}
+
+.admin-login-card button {
+  margin-top: 10px;
+  padding: 13px;
+  border: 0;
+  border-radius: 12px;
+  background: #c6b6f3;
+  color: #403254;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-login-card button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.admin-error {
+  color: #c04465;
+  font-size: 14px;
+}
+
+.admin-back-link {
+  display: inline-block;
+  margin-top: 22px;
+  color: #756482;
+  text-decoration: none;
+}
+
+.outfit-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  margin: 8px 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f1e8ff;
+  color: #68469a;
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.outfit-birthday {
+  background: #ffe9ef;
+  color: #b83e6d;
+}
+
+.outfit-orifuku {
+  background: #e1f5ea;
+  color: #28734e;
+}
+
+.outfit-sub_orifuku {
+  background: #fff1d9;
+  color: #925d13;
+}
+
+.outfit-description {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+/* 달력 일정 글자: 잘리지 않도록 여러 줄 표시 */
+.calendar-event-title {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.35;
+  font-size: 11px;
+  padding: 4px 5px;
+  margin-top: 3px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* 특별의상 일정만 눈에 띄게 강조 */
+.calendar-event-special {
+  background: #f0e5ff;
+  color: #7542b5;
+  border: 1px solid #c6a2ff;
+  font-weight: 800;
+}
+
+/* 일정이 3개 이상일 때 */
+.calendar-more {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+  color: #8b7d9d;
+}
+
+/* 달력 날짜 칸: 일정이 많아져도 높이가 늘어나도록 */
+.calendar-cell {
+  height: auto !important;
+  min-height: 100px !important;
+  overflow: visible !important;
+  align-items: stretch;
+}
+
+/* 일정 목록을 세로로 배치 */
+.calendar-day-events {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch;
+  gap: 3px;
+  min-width: 0;
+  width: 100%;
+}
+
+/* 제목을 한 줄로 자르지 않고 줄바꿈 */
+.calendar-day-event {
+  display: block !important;
+  width: 100%;
+  min-width: 0;
+  height: auto !important;
+  box-sizing: border-box;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word;
+  line-height: 1.4;
+  padding: 3px 4px;
+  border-radius: 5px;
+  font-size: 10px;
+}
+
+/* 특별의상 일정 */
+.calendar-day-event.outfit-special {
+  background: #ead9ff !important;
+  color: #7138ad !important;
+  border: 1px solid #bd91f5;
+  font-weight: 800;
 }

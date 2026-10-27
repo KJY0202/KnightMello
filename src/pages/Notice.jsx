@@ -12,8 +12,8 @@ export default function Notice() {
       <div className="list-topline"><span>ALL POSTS</span><span>{String(NOTICES.length).padStart(2, "0")} ARTICLES</span></div>
       <div className="notice-accordion">
         {NOTICES.map((notice, index) => <article className={`notice-article ${opened === notice.id ? "opened" : ""}`} key={notice.id}>
-          <button className="notice-accordion-button" onClick={() => setOpened(opened === notice.id ? null : notice.id)}>
-            <span className="notice-number">0{index + 1}</span><span className="notice-category">{notice.category}</span><span className="notice-title">{notice.title}</span><span className="notice-date">{notice.date}</span><ChevronDown size={17} className="accordion-chevron" />
+          <button type="button" className="notice-accordion-button" aria-expanded={opened === notice.id} onClick={() => setOpened(opened === notice.id ? null : notice.id)}>
+            <span className="notice-number">{String(index + 1).padStart(2, "0")}</span><span className="notice-category">{notice.category}</span><span className="notice-title">{notice.title}</span><span className="notice-date">{notice.date}</span><ChevronDown size={17} className="accordion-chevron" />
           </button>
           <AnimatePresence>{opened === notice.id && <motion.div className="notice-body" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: .25 }}><p>{notice.body}</p><span>KNIGHT MELLO FAN ARCHIVE <ArrowUpRight size={12} /></span></motion.div>}</AnimatePresence>
         </article>)}

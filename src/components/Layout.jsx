@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { ArrowUpRight, Menu, X, Heart } from "lucide-react";
-import { motion } from "framer-motion";
-import { NAV_ITEMS, OFFICIAL_X_URL } from "../data/siteData.js";
+import { NavLink } from "react-router-dom";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { NAV_ITEMS, OFFICIAL_X_URL, imagePath } from "../data/siteData.js";
 
 export default function Layout({ children }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -14,14 +12,17 @@ export default function Layout({ children }) {
       <header className="site-header">
         <div className="header-inner">
           <img
-            src={`${import.meta.env.BASE_URL}images/amblum.png`}
+            src={imagePath("amblum.png")}
             alt="Knight Mello"
             className="hero-ribbon-logo"
+            decoding="async"
           />
           <button
+            type="button"
             className="mobile-menu-button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="메뉴 열기"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"}
+            aria-expanded={menuOpen}
           >
             {menuOpen ? <X size={21} /> : <Menu size={21} />}
           </button>
@@ -52,7 +53,7 @@ export default function Layout({ children }) {
         </div>
       </header>
 
-      <main key={location.pathname} className="main-content">
+      <main className="main-content">
         {children}
       </main>
 

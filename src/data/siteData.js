@@ -1,3 +1,6 @@
+// public/images 안의 파일 경로를 만들어 주는 함수 (배포 주소 BASE_URL 자동 반영)
+export const imagePath = (name) => `${import.meta.env.BASE_URL}images/${name}`;
+
 // 실제 정보에 맞춰 이 파일만 수정하면 홈/각 페이지의 콘텐츠를 쉽게 관리할 수 있어요.
 export const NAV_ITEMS = [
   { label: "홈", path: "/" },
@@ -55,7 +58,7 @@ export const MEMBERS = [
     color: "#c6b6f3",
     role: "MEMBER",
     bio: "紫",
-    image: `${import.meta.env.BASE_URL}images/emo.jpeg`,
+    image: imagePath("emo.jpeg"),
   },
   {
     id: "pareo",
@@ -64,7 +67,7 @@ export const MEMBERS = [
     color: "#f2d66d",
     role: "MEMBER",
     bio: "黄色",
-    image: `${import.meta.env.BASE_URL}images/pareo.jpeg`,
+    image: imagePath("pareo.jpeg"),
   },
   {
     id: "popa",
@@ -73,7 +76,7 @@ export const MEMBERS = [
     color: "#9bd9c5",
     role: "MEMBER",
     bio: "ミントグリーン",
-    image: `${import.meta.env.BASE_URL}images/popa.jpeg`,
+    image: imagePath("popa.jpeg"),
   },
   {
     id: "saetbyeol",
@@ -82,20 +85,20 @@ export const MEMBERS = [
     color: "#d8d8d4",
     role: "MEMBER",
     bio: "白",
-    image: `${import.meta.env.BASE_URL}images/setbyol.jpeg`,
+    image: imagePath("setbyol.jpeg"),
   },
 ];
 
 // 이미지 파일을 public/images 폴더에 넣고 경로를 입력하세요.
 // 예: image: "/images/group-main.jpg"
-export const HOME_GROUP_IMAGE = `${import.meta.env.BASE_URL}images/group.jpeg`;
+export const HOME_GROUP_IMAGE = imagePath("group.jpeg");
 export const VIDEOS = [
   {
     id: "v1",
     title: "LOVE SET GO! (Official Live Video)",
     category: "LIVE",
     date: "2026.10.12",
-    thumbnail: `${import.meta.env.BASE_URL}images/thumb1.avif`,
+    thumbnail: imagePath("thumb1.avif"),
     url: "https://youtu.be/KmfQ8NvdG4c?si=c2yM5pUTgq1y7e63",
   },
   {

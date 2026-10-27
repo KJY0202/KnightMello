@@ -14,13 +14,16 @@ import {
   NOTICES,
   OFFICIAL_X_URL,
   VIDEOS,
+  imagePath,
 } from "../data/siteData.js";
 import SectionHeading from "../components/SectionHeading.jsx";
-import Calendar, { isKnightMelloEvent } from "../components/Calendar.jsx";
+import Calendar from "../components/Calendar.jsx";
 import MediaCard from "../components/MediaCard.jsx";
 
-const today = new Date();
-const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+const getTodayKey = () => {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+};
 
 const isPlaceholderSchedule = (schedule) =>
   /sample event|google calendar 연결 전|siteData\.js에서 수정/i.test(
@@ -47,24 +50,20 @@ function UpcomingSchedule({ schedules }) {
       </div>
 
       {schedules.length > 0 ? (
-        <motion.div
-          className="upcoming-schedule-list"
-          initial="hidden"
-          animate="visible"
-          viewport={{ once: true, amount: 0.18 }}
-          variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
-        >
+        <div className="upcoming-schedule-list">
           {schedules.map((schedule, index) => {
             const date = formatScheduleDate(schedule.date);
             return (
               <motion.article
                 className="upcoming-schedule-card"
                 key={`${schedule.date}-${schedule.title}-${index}`}
-                variants={{
-                  hidden: { opacity: 0, y: 18 },
-                  visible: { opacity: 1, y: 0 },
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.09,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -4 }}
               >
                 <div
@@ -102,13 +101,12 @@ function UpcomingSchedule({ schedules }) {
               </motion.article>
             );
           })}
-        </motion.div>
+        </div>
       ) : (
         <motion.div
           className="upcoming-empty"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
           transition={{ duration: 0.45 }}
         >
           <span className="upcoming-empty-icon">
@@ -140,24 +138,24 @@ export default function Home() {
   const handleCalendarEvents = useCallback((events) => {
     setCalendarSchedules(events);
   }, []);
-  const upcomingSchedules = useMemo(
-    () =>
-      calendarSchedules
-        .filter(
-          (schedule) =>
-            isKnightMelloEvent(schedule) &&
-            schedule.date &&
-            schedule.date >= todayKey &&
-            !isPlaceholderSchedule(schedule),
-        )
-        .sort((a, b) =>
-          `${a.date} ${a.time || "23:59"}`.localeCompare(
-            `${b.date} ${b.time || "23:59"}`,
-          ),
-        )
-        .slice(0, 3),
-    [calendarSchedules],
-  );
+  // Calendar가 이미 Knight Mello 일정만 넘겨주므로 여기서는 "오늘 이후 + 3개"만 고릅니다.
+  const upcomingSchedules = useMemo(() => {
+    const todayKey = getTodayKey();
+
+    return calendarSchedules
+      .filter(
+        (schedule) =>
+          schedule.date &&
+          schedule.date >= todayKey &&
+          !isPlaceholderSchedule(schedule),
+      )
+      .sort((a, b) =>
+        `${a.date} ${a.time || "23:59"}`.localeCompare(
+          `${b.date} ${b.time || "23:59"}`,
+        ),
+      )
+      .slice(0, 3);
+  }, [calendarSchedules]);
 
   return (
     <motion.div
@@ -173,6 +171,8 @@ export default function Home() {
             className="hero-group-image"
             src={HOME_GROUP_IMAGE}
             alt="Knight Mello 단체 사진"
+            fetchpriority="high"
+            decoding="async"
           />
         ) : (
           <div className="hero-image-placeholder">
@@ -196,9 +196,10 @@ export default function Home() {
           </Link>
         </div>
         <img
-          src={`${import.meta.env.BASE_URL}images/amblum.png`}
+          src={imagePath("amblum.png")}
           alt="Knight Mello"
           className="amblum-logo"
+          decoding="async"
         />
         <div className="hero-bottom-label">
           <span>01 — THE GROUP</span>
