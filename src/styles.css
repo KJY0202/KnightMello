@@ -2021,3 +2021,58 @@ a:focus-visible {
     padding: 2px;
   }
 }
+
+/* 캘린더 의상 범례 */
+.calendar-outfit-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.outfit-legend-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 9px;
+  border: 1px solid #eee5f5;
+  border-radius: 999px;
+  background: #fff;
+  color: #62566e;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.outfit-legend-special {
+  background: #fff0f5;
+  border-color: #f5d4e2;
+}
+
+.outfit-legend-birthday {
+  background: #fff5dc;
+  border-color: #f1dfaa;
+}
+
+.outfit-legend-orifuku {
+  background: #eaf8ee;
+  border-color: #ccebd5;
+}
+
+.outfit-legend-sub_orifuku {
+  background: #edf3ff;
+  border-color: #d5e2ff;
+}
+
+@media (max-width: 480px) {
+  .calendar-outfit-legend {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .outfit-legend-item {
+    padding: 4px 7px;
+    font-size: 11px;
+  }
+}

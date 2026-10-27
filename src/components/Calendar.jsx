@@ -504,6 +504,16 @@ export default function Calendar({ compact = false, onEventsChange }) {
             </button>
           </div>
         </div>
+        <div className="calendar-outfit-legend">
+          {Object.entries(OUTFIT_LABELS).map(([type, label]) => (
+            <span
+              key={type}
+              className={`outfit-legend-item outfit-legend-${type}`}
+            >
+              {label}
+            </span>
+          ))}
+        </div>
 
         <div className="calendar-grid weekday-row">
           {WEEKDAYS.map((day) => (
@@ -541,7 +551,10 @@ export default function Calendar({ compact = false, onEventsChange }) {
                   <div className="calendar-day-events">
                     {cell.dayEvents.map((event, eventIndex) => (
                       <span
-                        key={event.id || `${cell.date}-${event.title}-${eventIndex}`}
+                        key={
+                          event.id ||
+                          `${cell.date}-${event.title}-${eventIndex}`
+                        }
                         className={[
                           "calendar-event-title",
                           event.outfit?.outfit_type === "special"
