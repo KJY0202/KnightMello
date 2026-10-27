@@ -539,13 +539,16 @@ export default function Calendar({ compact = false, onEventsChange }) {
 
                 {cell.hasEvent && (
                   <div className="calendar-day-events">
-                    {cell.dayEvents.slice(0, 2).map((event) => (
+                    {cell.dayEvents.map((event, eventIndex) => (
                       <span
-                        key={event.id}
+                        key={event.id || `${cell.date}-${event.title}-${eventIndex}`}
                         className={[
                           "calendar-event-title",
                           event.outfit?.outfit_type === "special"
                             ? "calendar-event-special"
+                            : "",
+                          event.outfit?.outfit_type
+                            ? `calendar-event-outfit-${event.outfit.outfit_type}`
                             : "",
                         ]
                           .filter(Boolean)
@@ -553,20 +556,12 @@ export default function Calendar({ compact = false, onEventsChange }) {
                         title={event.detail || event.title}
                       >
                         {event.outfit?.outfit_type === "special" && "✨ "}
+                        {event.outfit?.outfit_type === "birthday" && "🎂 "}
+                        {event.outfit?.outfit_type === "orifuku" && "👗 "}
+                        {event.outfit?.outfit_type === "sub_orifuku" && "👚 "}
                         {event.detail || event.title}
                       </span>
                     ))}
-                    {cell.dayEvents.length > 2 && (
-                      <span className="calendar-more">
-                        +{cell.dayEvents.length - 2}개 더
-                      </span>
-                    )}
-
-                    {cell.dayEvents.length > 2 && (
-                      <span className="calendar-day-more">
-                        +{cell.dayEvents.length - 2}
-                      </span>
-                    )}
                   </div>
                 )}
               </button>

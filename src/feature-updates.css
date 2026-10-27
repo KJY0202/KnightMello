@@ -37,7 +37,9 @@
   border-radius: 4px;
   background: linear-gradient(145deg, #fff 10%, #fbf8ff 100%);
   box-shadow: 0 5px 18px rgba(83, 63, 119, 0.035);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 .upcoming-schedule-card:hover {
   border-color: #d5c9ef;
@@ -168,7 +170,9 @@
   color: #7763aa;
   font: 700 8px var(--serif);
   letter-spacing: 0.08em;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 .upcoming-official-link:hover {
   transform: translateY(-2px);
@@ -181,7 +185,9 @@
 }
 .home-calendar-heading > span:last-child {
   color: #a09aa9;
-  font: 500 10px/1.5 "Noto Sans KR", sans-serif;
+  font:
+    500 10px/1.5 "Noto Sans KR",
+    sans-serif;
   letter-spacing: 0;
 }
 
@@ -241,7 +247,11 @@
 }
 .photo-empty-upgraded {
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,.9), transparent 38%),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.9),
+      transparent 38%
+    ),
     linear-gradient(145deg, #f4ecff 0%, #fff7e6 52%, #e7f7f0 100%);
 }
 .photo-empty-upgraded > span {
@@ -251,7 +261,7 @@
   place-items: center;
   border: 1px solid rgba(161, 139, 215, 0.3);
   border-radius: 50%;
-  background: rgba(255,255,255,.55);
+  background: rgba(255, 255, 255, 0.55);
 }
 .photo-empty-upgraded em {
   color: #aaa1bc;
@@ -323,7 +333,7 @@
   max-height: calc(100vh - 175px);
   object-fit: contain;
   border-radius: 2px;
-  box-shadow: 0 15px 70px rgba(0,0,0,.22);
+  box-shadow: 0 15px 70px rgba(0, 0, 0, 0.22);
 }
 .lightbox-caption {
   display: flex;
@@ -332,7 +342,7 @@
   gap: 20px;
   width: min(100%, 1120px);
   padding-top: 16px;
-  color: rgba(255,255,255,.88);
+  color: rgba(255, 255, 255, 0.88);
 }
 .lightbox-caption > div:first-child {
   display: flex;
@@ -364,28 +374,37 @@
   width: 44px;
   height: 44px;
   place-items: center;
-  border: 1px solid rgba(255,255,255,.28);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 50%;
-  background: rgba(255,255,255,.08);
+  background: rgba(255, 255, 255, 0.08);
   color: white;
   cursor: pointer;
   transform: translateY(-50%);
-  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 .lightbox-nav:hover {
-  border-color: rgba(255,255,255,.6);
-  background: rgba(255,255,255,.18);
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.18);
 }
-.lightbox-prev { left: 25px; }
-.lightbox-next { right: 25px; }
+.lightbox-prev {
+  left: 25px;
+}
+.lightbox-next {
+  right: 25px;
+}
 .lightbox-close {
   z-index: 3;
   cursor: pointer;
-  transition: transform .2s ease, background .2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 .lightbox-close:hover {
   transform: rotate(90deg);
-  background: rgba(255,255,255,.12);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 /* Mobile layout: no overflowing schedule details or lightbox controls */
@@ -466,8 +485,12 @@
     height: 38px;
     transform: none;
   }
-  .lightbox-prev { left: 16px; }
-  .lightbox-next { right: 16px; }
+  .lightbox-prev {
+    left: 16px;
+  }
+  .lightbox-next {
+    right: 16px;
+  }
   .lightbox-caption {
     align-items: flex-start;
     flex-direction: column;
@@ -492,5 +515,91 @@
   .lightbox-nav,
   .lightbox-close {
     transition: none !important;
+  }
+}
+
+/* ===== Calendar layout fix ===== */
+
+/* 날짜 칸은 달력의 7열 안에서만 배치 */
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.calendar-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  min-height: 100px;
+  height: auto !important;
+  padding: 6px 4px;
+  overflow: hidden !important;
+  box-sizing: border-box;
+}
+
+/* 날짜 숫자만 동그랗게 */
+.calendar-cell > .calendar-day-number,
+.calendar-cell > span:first-child {
+  display: grid;
+  flex: 0 0 30px;
+  place-items: center;
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+  align-self: center;
+}
+
+/* 일정 목록 */
+.calendar-cell .calendar-day-events {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 3px;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* 일정 제목: 날짜 숫자 스타일이 적용되지 않도록 분리 */
+.calendar-cell .calendar-day-event,
+.calendar-cell .calendar-event-title {
+  display: block;
+  position: static;
+  flex: 0 0 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  margin: 2px 0 0;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 10px;
+  line-height: 1.45;
+  text-align: left;
+  white-space: normal !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+  .calendar-cell {
+    min-height: 76px;
+    padding: 4px 2px;
+  }
+
+  .calendar-cell .calendar-day-event,
+  .calendar-cell .calendar-event-title {
+    padding: 2px;
+    font-size: 9px;
   }
 }
